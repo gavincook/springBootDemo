@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 /**
  * @author GavinCook
- * @date 2015/10/29
+ * @since 1.0.0
  */
 @Controller
 public class SampleController {
@@ -21,10 +21,8 @@ public class SampleController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
-        return jdbcTemplate.query("select id from tab_user limit 1", handler->{
-            handler.next();
-            return handler.getInt(1)+"";
-        });
+        int userCount = jdbcTemplate.queryForObject("select count(id) from tab_user",Integer.class);
+        return "There have " + userCount+" user(s).";
     }
 
 }
